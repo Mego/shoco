@@ -49,9 +49,11 @@ static PyObject *pyshoco_compress(PyObject *self, PyObject *args) {
         return NULL;
     
     const size_t bufsize = strlen(in)*2+1;
-    char out[bufsize];
+    char *out;
+    out = (char *)malloc(sizeof(char)*bufsize);
     memset(out, 0, bufsize);
     shoco_compress(in, strlen(in), out, bufsize);
+    free(out);
     return Py_BuildValue("s", out);
 }
 
@@ -62,8 +64,11 @@ static PyObject *pyshoco_decompress(PyObject *self, PyObject *args) {
         return NULL;
     
     const size_t bufsize = strlen(in)*2+1;
+    char *out;
+    out = (char *)malloc(sizeof(char)*bufsize);
     char out[bufsize];
     memset(out, 0, bufsize);
     shoco_decompress(in, strlen(in), out, bufsize);
+    free(out);
     return Py_BuildValue("s", out);
 }
